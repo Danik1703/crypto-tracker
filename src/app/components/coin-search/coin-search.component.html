@@ -1,0 +1,9 @@
+<div class="coin-search">
+    <input
+      type="text"
+      [(ngModel)]="query"
+      placeholder="Search for a coin"
+      (keyup.enter)="onSearch()" />
+    <button (click)="onSearch()">Search</button>
+  </div>
+  

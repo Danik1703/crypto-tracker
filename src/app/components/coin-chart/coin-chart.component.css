@@ -1,0 +1,21 @@
+.chart-container {
+    margin-top: 40px;
+    text-align: center;
+  
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
+  .loading, .error {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+    color: #ff5722;
+  }
+  
+  .loading {
+    color: #ff9800;
+  }
+  
