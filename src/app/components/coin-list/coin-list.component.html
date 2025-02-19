@@ -1,39 +1,47 @@
-<body>
-    <header>
-      <div class="container">
-        <h1 class="logo">Crypto Tracker</h1>
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-    
-<table>
-    <thead>
-      <tr>
-        <th>Название</th>
-        <th>Цена</th>
-        <th>Рыночная капитализация</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let crypto of filterCryptocurrencies()">
-        <td>{{ crypto.name }}</td>
-        <td>\${{ crypto.current_price }}</td>
-        <td>\${{ crypto.market_cap | number }}</td>
-        <td><a [routerLink]="['/coin', crypto.id]">View Chart</a></td>
-      </tr>
-    </tbody>
-  </table>
+<header>
+  <div class="container">
+    <h1 class="logo">Crypto Tracker</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Главная</a></li>
+        <li><a href="#">О нас</a></li>
+        <li><a href="#">Контакты</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 Crypto Tracker. All rights reserved.</p>
-      <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+<main>
+  <div class="container">
+    <div class="search-container">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Поиск криптовалют...">
+      <button (click)="searchCoins()">🔍 Найти</button>
     </div>
-  </footer>
-  
+
+    <table>
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Цена</th>
+          <th>Рыночная капитализация</th>
+          <th>Действие</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let crypto of filterCryptocurrencies()">
+          <td>{{ crypto.name }}</td>
+          <td>\${{ crypto.current_price | number:'1.2-2' }}</td>
+          <td>\${{ crypto.market_cap | number }}</td>
+          <td><a [routerLink]="['/coin', crypto.id]" class="view-btn">График</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Crypto Tracker. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+  </div>
+</footer>
