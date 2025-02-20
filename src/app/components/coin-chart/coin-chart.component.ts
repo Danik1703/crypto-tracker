@@ -12,12 +12,15 @@ export class CoinChartComponent implements OnInit {
   coinId: string = ''; 
   chartData: ChartData = { datasets: [] };
   chartLabels: string[] = [];
-  chartOptions: ChartOptions = {
-    responsive: true,
-  };
+  chartOptions: ChartOptions = { responsive: true };
   chartType: ChartType = 'line';
   loading: boolean = false;
   error: string | null = null;
+
+  usdToEur: number = 0.92;
+  usdToUah: number = 39.5;
+
+  selectedCurrency: string = 'usd';
 
   constructor(
     private route: ActivatedRoute, 
@@ -43,18 +46,7 @@ export class CoinChartComponent implements OnInit {
     this.coinGeckoService.getCoinChartData(this.coinId).subscribe(
       (data: any) => {
         this.chartLabels = data.prices.map((price: number[]) => new Date(price[0]).toLocaleTimeString());
-        this.chartData = {
-          labels: this.chartLabels,
-          datasets: [
-            {
-              label: 'Price in USD',
-              data: data.prices.map((price: number[]) => price[1]),
-              fill: false,
-              borderColor: 'rgb(75, 192, 192)',
-              tension: 0.1
-            }
-          ]
-        };
+        this.updateChartData(data.prices);
         this.loading = false;
       },
       (error) => {
@@ -62,5 +54,38 @@ export class CoinChartComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  updateChartData(prices: number[][]): void {
+    let conversionRate = 1; // Для USD
+    let currencyLabel = 'USD';
+    let borderColor = 'rgb(75, 192, 192)';
+
+    if (this.selectedCurrency === 'eur') {
+      conversionRate = this.usdToEur;
+      currencyLabel = 'EUR';
+      borderColor = 'rgb(255, 159, 64)';
+    } else if (this.selectedCurrency === 'uah') {
+      conversionRate = this.usdToUah;
+      currencyLabel = 'UAH';
+      borderColor = 'rgb(255, 99, 132)';
+    }
+
+    this.chartData = {
+      labels: this.chartLabels,
+      datasets: [
+        {
+          label: `Ціна в ${currencyLabel}`,
+          data: prices.map((price: number[]) => price[1] * conversionRate),
+          fill: false,
+          borderColor: borderColor,
+          tension: 0.1
+        }
+      ]
+    };
+  }
+
+  onCurrencyChange(): void {
+    this.loadChartData();
   }
 }

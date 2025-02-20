@@ -1,47 +1,48 @@
 <header>
   <div class="container">
-    <h1 class="logo">Crypto Tracker</h1>
-    <nav>
-      <ul>
-        <li><a href="#">Главная</a></li>
-        <li><a href="#">О нас</a></li>
-        <li><a href="#">Контакты</a></li>
-      </ul>
-    </nav>
+    <div class="logo-container">
+      <img src="assets/logo.png" alt="Crypto Tracker Logo" class="logo-img">
+      <h1 class="logo">Crypto Tracker</h1>
+    </div>
+
   </div>
 </header>
 
-<main>
-  <div class="container">
-    <div class="search-container">
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Поиск криптовалют...">
-      <button (click)="searchCoins()">🔍 Найти</button>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Название</th>
-          <th>Цена</th>
-          <th>Рыночная капитализация</th>
-          <th>Действие</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let crypto of filterCryptocurrencies()">
-          <td>{{ crypto.name }}</td>
-          <td>\${{ crypto.current_price | number:'1.2-2' }}</td>
-          <td>\${{ crypto.market_cap | number }}</td>
-          <td><a [routerLink]="['/coin', crypto.id]" class="view-btn">График</a></td>
-        </tr>
-      </tbody>
-    </table>
+<div class="container">
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Пошук криптовалют...">
+    <button (click)="searchCoins()">🔍 Знайти</button>
   </div>
-</main>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Назва</th>
+        <th>Ціна (USD)</th>
+        <th>Ціна (EUR)</th>
+        <th>Ціна (UAH)</th>
+        <th>Ринкова капіталізація</th>
+        <th>Дія</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let crypto of filterCryptocurrencies()">
+        <td>{{ crypto.name }}</td>
+        <td [class]="getPriceChangeClass(crypto)">
+          {{ convertCurrency(crypto.current_price, 'USD') }}
+        </td>
+        <td>{{ convertCurrency(crypto.current_price, 'EUR') }}</td>
+        <td>{{ convertCurrency(crypto.current_price, 'UAH') }}</td>
+        <td>\${{ crypto.market_cap | number }}</td>
+        <td><a [routerLink]="['/coin', crypto.id]" class="view-btn">Графік</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <footer>
   <div class="container">
-    <p>&copy; 2025 Crypto Tracker. Все права защищены.</p>
-    <p><a href="#">Политика конфиденциальности</a> | <a href="#">Условия использования</a></p>
+    <p>&copy; 2025 Crypto Tracker. Усі права захищені.</p>
+    <p><a href="#">Політика конфіденційності</a> | <a href="#">Умови використання</a></p>
   </div>
 </footer>

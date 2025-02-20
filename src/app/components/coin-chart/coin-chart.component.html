@@ -1,10 +1,28 @@
-<div *ngIf="loading">Loading chart data...</div>
-<div *ngIf="error">{{ error }}</div>
+<div *ngIf="loading" class="loading-container">
+  <div class="loading">Завантаження даних...</div>
+  <div class="spinner"></div>
+</div>
+
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>
+
 <div *ngIf="!loading && !error">
-  <canvas baseChart
-          [datasets]="chartData.datasets"
-          [labels]="chartLabels"
-          [options]="chartOptions"
-          [type]="chartType">
-  </canvas>
+  <div class="currency-selector">
+    <label for="currency">Валюта:</label>
+    <select id="currency" [(ngModel)]="selectedCurrency" (change)="onCurrencyChange()">
+      <option value="usd">USD</option>
+      <option value="eur">EUR</option>
+      <option value="uah">UAH</option>
+    </select>
+  </div>
+
+  <div class="chart-container">
+    <canvas baseChart
+            [datasets]="chartData.datasets"
+            [labels]="chartLabels"
+            [options]="chartOptions"
+            [type]="chartType">
+    </canvas>
+  </div>
 </div>
