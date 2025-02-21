@@ -7,7 +7,7 @@ export const PLUGIN_VERSION = {
     "semver": null,
     "suffix": "073a370-dirty",
     "semverString": null,
-    "name": "clothes-shop",
+    "name": "crypto-tracker",
     "version": "1.1.1",
     "main": "main.js"
 };
