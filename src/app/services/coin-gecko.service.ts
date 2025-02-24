@@ -16,12 +16,15 @@ export class CoinGeckoService {
       params: { vs_currency: 'usd' }
     });
   }
-
-  getCoinChartData(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/coins/${id}/market_chart`, {
-      params: { vs_currency: 'usd', days: '7' }
+  getCoinChartData(coinId: string, days: number = 1) {
+    return this.http.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
+      params: {
+        vs_currency: 'usd',
+        days: days.toString()
+      }
     });
   }
+  
 
   searchCoins(query: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/search`, {

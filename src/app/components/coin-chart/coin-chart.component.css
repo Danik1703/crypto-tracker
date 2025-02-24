@@ -1,15 +1,45 @@
 .chart-container {
-  margin-top: 40px;
-  text-align: center;
-  background: linear-gradient(135deg, #f5f7fa, #e0e0e0);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease-in-out;
+  overflow-x: auto;
+  max-width: 100%;
+}
 
-  &:hover {
-    transform: scale(1.02);
-  }
+.period-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.period-selector label {
+  font-weight: bold;
+  color: #333;
+}
+
+.period-selector select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.period-selector select:hover {
+  border-color: #0056b3;
+}
+
+.period-selector select:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.period-selector select option {
+  padding: 5px;
+  font-size: 14px;
+}
+
 
   canvas {
     max-width: 100%;
@@ -18,7 +48,15 @@
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   }
-}
+
+  table {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  table th, table td {
+    white-space: nowrap;
+  }
 
 .loading-container {
   display: flex;
@@ -48,6 +86,31 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.back-button {
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #8e8e8e; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 15px;
+  position: absolute;
+  right: 10px; 
+  top: 70px; 
+}
+
+.back-button:hover {
+  background-color: #6a6a6a; 
+}
+
+.back-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.6);
+}
+
 
 .error {
   font-size: 18px;

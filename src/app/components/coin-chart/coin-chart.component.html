@@ -7,6 +7,9 @@
   {{ error }}
 </div>
 
+<button class="back-button" (click)="goBack()">⬅️ Назад на головну</button>
+
+
 <div *ngIf="!loading && !error">
   <div class="currency-selector">
     <label for="currency">Валюта:</label>
@@ -17,6 +20,17 @@
     </select>
   </div>
 
+  
+  <div class="period-selector">
+    <label for="period">Період:</label>
+    <select id="period" [(ngModel)]="selectedPeriod" (change)="onPeriodChange()">
+      <option value="1m">1 хвилина</option>
+      <option value="24h">24 години</option>
+      <option value="7d">Тиждень</option>
+      <option value="30d">Місяць</option>
+    </select>
+  </div>
+  
   <div class="chart-container">
     <canvas baseChart
             [datasets]="chartData.datasets"
@@ -26,3 +40,4 @@
     </canvas>
   </div>
 </div>
+

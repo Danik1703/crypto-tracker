@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CoinGeckoService } from 'src/app/services/coin-gecko.service';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
+import { Location } from '@angular/common'; 
 
 @Component({
   selector: 'app-coin-chart',
@@ -21,10 +22,12 @@ export class CoinChartComponent implements OnInit {
   usdToUah: number = 39.5;
 
   selectedCurrency: string = 'usd';
+  selectedPeriod: string = '24h';
 
   constructor(
     private route: ActivatedRoute, 
-    private coinGeckoService: CoinGeckoService
+    private coinGeckoService: CoinGeckoService,
+    private location: Location 
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +35,14 @@ export class CoinChartComponent implements OnInit {
       this.coinId = params['id']; 
       this.loadChartData();  
     });
+  }
+
+  onPeriodChange(): void {
+    this.loadChartData();
+  }
+
+  goBack(): void {
+    this.location.back(); 
   }
 
   loadChartData(): void {
@@ -43,9 +54,13 @@ export class CoinChartComponent implements OnInit {
     this.loading = true;
     this.error = null;
 
-    this.coinGeckoService.getCoinChartData(this.coinId).subscribe(
+    let days = 1; 
+    if (this.selectedPeriod === '7d') days = 7;
+    else if (this.selectedPeriod === '30d') days = 30;
+
+    this.coinGeckoService.getCoinChartData(this.coinId, days).subscribe(
       (data: any) => {
-        this.chartLabels = data.prices.map((price: number[]) => new Date(price[0]).toLocaleTimeString());
+        this.chartLabels = data.prices.map((price: number[]) => new Date(price[0]).toLocaleDateString());
         this.updateChartData(data.prices);
         this.loading = false;
       },
@@ -57,7 +72,7 @@ export class CoinChartComponent implements OnInit {
   }
 
   updateChartData(prices: number[][]): void {
-    let conversionRate = 1; // Для USD
+    let conversionRate = 1; 
     let currencyLabel = 'USD';
     let borderColor = 'rgb(75, 192, 192)';
 

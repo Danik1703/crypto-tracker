@@ -4,7 +4,6 @@
       <img src="assets/logo.png" alt="Crypto Tracker Logo" class="logo-img">
       <h1 class="logo">Crypto Tracker</h1>
     </div>
-
   </div>
 </header>
 
@@ -34,7 +33,7 @@
         <td>{{ convertCurrency(crypto.current_price, 'EUR') }}</td>
         <td>{{ convertCurrency(crypto.current_price, 'UAH') }}</td>
         <td>\${{ crypto.market_cap | number }}</td>
-        <td><a [routerLink]="['/coin', crypto.id]" class="view-btn">Графік</a></td>
+        <td><a [routerLink]="['/coin', crypto.id]" class="view-btn">📈 Графік</a></td>
       </tr>
     </tbody>
   </table>

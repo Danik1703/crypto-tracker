@@ -4,12 +4,12 @@ import { CoinListComponent } from './components/coin-list/coin-list.component';
 import { CoinChartComponent } from './components/coin-chart/coin-chart.component';
 
 const routes: Routes = [
-    { path: '', component: CoinListComponent },  
-    { path: 'coin/:id', component: CoinChartComponent },  
-  ];
+  { path: '', component: CoinListComponent },  
+  { path: 'coin/:id', component: CoinChartComponent },  
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],  
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],  
   exports: [RouterModule]  
 })
 export class AppRoutingModule { }
