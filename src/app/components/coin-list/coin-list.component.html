@@ -1,11 +1,42 @@
 <header>
   <div class="container">
     <div class="logo-container">
-      <img src="assets/logo.png" alt="Crypto Tracker Logo" class="logo-img">
+      <img [src]="getAsset('/logo.png')" alt="Crypto Tracker Logo" class="logo-img">
       <h1 class="logo">Crypto Tracker</h1>
     </div>
   </div>
 </header>
+
+
+<div class="reviews">
+  <h3>Відгуки</h3>
+
+  <div class="review-form">
+    <textarea [(ngModel)]="reviewText" placeholder="Ваш відгук..." rows="4"></textarea>
+    <div class="rating">
+      <label>Оцініть: </label>
+      <select [(ngModel)]="reviewRating">
+        <option *ngFor="let rating of [1, 2, 3, 4, 5]" [value]="rating">{{rating}}</option>
+      </select>
+    </div>
+    <button (click)="submitReview()">Відправити</button>
+  </div>
+
+  <div *ngIf="reviews.length > 0">
+    <h4>Список відгуків:</h4>
+    <div class="review-list">
+      <div class="review" *ngFor="let review of reviews">
+        <p><strong>Оцінка: {{ review.rating }} / 5</strong></p>
+        <p>{{ review.text }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="reviews.length === 0">
+    <p>Немає відгуків. Будь ласка, залиште перший відгук!</p>
+  </div>
+</div>
+
+
 
 <div class="container">
   <div class="search-container">
@@ -42,6 +73,6 @@
 <footer>
   <div class="container">
     <p>&copy; 2025 Crypto Tracker. Усі права захищені.</p>
-    <p><a href="#">Політика конфіденційності</a> | <a href="#">Умови використання</a></p>
+    <p>Політика конфіденційності | Умови використання</p>
   </div>
 </footer>

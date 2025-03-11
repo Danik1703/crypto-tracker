@@ -8,6 +8,6 @@ export const PLUGIN_VERSION = {
     "suffix": "5484e4a-dirty",
     "semverString": null,
     "name": "crypto-tracker",
-    "version": "1.1.2",
+    "version": "1.1.5",
     "main": "main.js"
 };

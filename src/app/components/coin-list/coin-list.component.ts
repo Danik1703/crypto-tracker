@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoinGeckoService } from 'src/app/services/coin-gecko.service';
+import { PlatformHelper } from '@natec/mef-dev-platform-connector';
 
 @Component({
   selector: 'app-coin-list',
@@ -12,7 +13,10 @@ export class CoinListComponent implements OnInit {
   selectedCoinId: string | null = null;
   previousPrices: { [key: string]: number } = {};
   
-  // Курсы валют (примерные значения, можно обновлять через API)
+  reviews: { text: string, rating: number }[] = [];
+  reviewText: string = '';
+  reviewRating: number = 5;  
+
   usdToEur: number = 0.92;
   usdToUah: number = 39.5;
 
@@ -20,6 +24,7 @@ export class CoinListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCoins();
+    setInterval(() => this.loadCoins(), 60000); 
   }
 
   loadCoins(): void {
@@ -32,6 +37,21 @@ export class CoinListComponent implements OnInit {
         console.error('Помилка завантаження даних:', error);
       }
     );
+  }
+
+  submitReview(): void {
+    if (this.reviewText.trim() === '') {
+      alert('Будь ласка, введіть відгук.');
+      return;
+    }
+  
+    this.reviews.push({ text: this.reviewText, rating: this.reviewRating });
+    this.reviewText = '';  
+    this.reviewRating = 5; 
+  }
+
+  getAsset(url:string): string{
+    return PlatformHelper.getAssetUrl() + url
   }
 
   filterCryptocurrencies(): any[] {
