@@ -12,19 +12,21 @@ export class CoinListComponent implements OnInit {
   searchTerm: string = '';
   selectedCoinId: string | null = null;
   previousPrices: { [key: string]: number } = {};
-  
+
   reviews: { text: string, rating: number }[] = [];
   reviewText: string = '';
-  reviewRating: number = 5;  
+  reviewRating: number = 5;
 
   usdToEur: number = 0.92;
   usdToUah: number = 39.5;
+
+  isModalOpen: boolean = false;
 
   constructor(private coinGeckoService: CoinGeckoService) {}
 
   ngOnInit(): void {
     this.loadCoins();
-    setInterval(() => this.loadCoins(), 60000); 
+    setInterval(() => this.loadCoins(), 60000);
   }
 
   loadCoins(): void {
@@ -39,19 +41,28 @@ export class CoinListComponent implements OnInit {
     );
   }
 
+  openModal(): void {
+    this.isModalOpen = true;
+  }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
   submitReview(): void {
     if (this.reviewText.trim() === '') {
       alert('Будь ласка, введіть відгук.');
       return;
     }
-  
+
     this.reviews.push({ text: this.reviewText, rating: this.reviewRating });
-    this.reviewText = '';  
-    this.reviewRating = 5; 
+    this.reviewText = '';
+    this.reviewRating = 5;
+    this.closeModal(); 
   }
 
-  getAsset(url:string): string{
-    return PlatformHelper.getAssetUrl() + url
+  getAsset(url: string): string {
+    return PlatformHelper.getAssetUrl() + url;
   }
 
   filterCryptocurrencies(): any[] {

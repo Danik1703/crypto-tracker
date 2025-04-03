@@ -9,35 +9,37 @@
 
 <button class="back-button" (click)="goBack()">⬅️ Назад на головну</button>
 
-
-<div *ngIf="!loading && !error">
-  <div class="currency-selector">
-    <label for="currency">Валюта:</label>
-    <select id="currency" [(ngModel)]="selectedCurrency" (change)="onCurrencyChange()">
-      <option value="usd">USD</option>
-      <option value="eur">EUR</option>
-      <option value="uah">UAH</option>
-    </select>
-  </div>
-
+  <div *ngIf="!loading && !error">
+    <div class="currency-selector">
+      <label for="currency">Валюта:</label>
+      <select id="currency" [(ngModel)]="selectedCurrency" (change)="onCurrencyChange()">
+        <option value="usd">USD</option>
+        <option value="eur">EUR</option>
+        <option value="uah">UAH</option>
+      </select>
+    </div>
   
-  <div class="period-selector">
-    <label for="period">Період:</label>
-    <select id="period" [(ngModel)]="selectedPeriod" (change)="onPeriodChange()">
-      <option value="1m">1 хвилина</option>
-      <option value="24h">24 години</option>
-      <option value="7d">Тиждень</option>
-      <option value="30d">Місяць</option>
-    </select>
+    <div class="period-selector">
+      <label for="period">Період:</label>
+      <select id="period" [(ngModel)]="selectedPeriod" (change)="onPeriodChange()">
+        <option value="1m">1 хвилина</option>
+        <option value="24h">24 години</option>
+        <option value="7d">Тиждень</option>
+        <option value="30d">Місяць</option>
+      </select>
+    </div>
+    
+    <div class="chart-container">
+      <canvas baseChart
+              [datasets]="chartData.datasets"
+              [labels]="chartLabels"
+              [options]="chartOptions"
+              [type]="chartType">
+      </canvas>
+    </div>
+  
+    <div class="last-updated" *ngIf="lastUpdated">
+      Останнє оновлення: {{ lastUpdated }}
+    </div>
   </div>
   
-  <div class="chart-container">
-    <canvas baseChart
-            [datasets]="chartData.datasets"
-            [labels]="chartLabels"
-            [options]="chartOptions"
-            [type]="chartType">
-    </canvas>
-  </div>
-</div>
-

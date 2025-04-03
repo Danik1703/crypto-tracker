@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CoinGeckoService } from 'src/app/services/coin-gecko.service';
 import { ChartOptions, ChartType, ChartData } from 'chart.js';
@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
   templateUrl: './coin-chart.component.html',
   styleUrls: ['./coin-chart.component.css']
 })
-export class CoinChartComponent implements OnInit {
+export class CoinChartComponent implements OnInit, OnDestroy {
   coinId: string = ''; 
   chartData: ChartData = { datasets: [] };
   chartLabels: string[] = [];
@@ -23,6 +23,8 @@ export class CoinChartComponent implements OnInit {
 
   selectedCurrency: string = 'usd';
   selectedPeriod: string = '24h';
+  lastUpdated: string = ''; 
+  intervalId: any;
 
   constructor(
     private route: ActivatedRoute, 
@@ -35,6 +37,16 @@ export class CoinChartComponent implements OnInit {
       this.coinId = params['id']; 
       this.loadChartData();  
     });
+
+    this.intervalId = setInterval(() => {
+      this.loadChartData();
+    }, 60000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   onPeriodChange(): void {
@@ -62,6 +74,7 @@ export class CoinChartComponent implements OnInit {
       (data: any) => {
         this.chartLabels = data.prices.map((price: number[]) => new Date(price[0]).toLocaleDateString());
         this.updateChartData(data.prices);
+        this.lastUpdated = new Date().toLocaleTimeString(); 
         this.loading = false;
       },
       (error) => {

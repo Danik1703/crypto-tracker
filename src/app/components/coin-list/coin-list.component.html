@@ -10,16 +10,30 @@
 
 <div class="reviews">
   <h3>Відгуки</h3>
+  
+  <!-- Кнопка для відкриття модального вікна -->
+  <button (click)="openModal()">Додати відгук</button>
 
-  <div class="review-form">
-    <textarea [(ngModel)]="reviewText" placeholder="Ваш відгук..." rows="4"></textarea>
-    <div class="rating">
-      <label>Оцініть: </label>
-      <select [(ngModel)]="reviewRating">
-        <option *ngFor="let rating of [1, 2, 3, 4, 5]" [value]="rating">{{rating}}</option>
-      </select>
+  <!-- Модальне вікно для додавання відгуку -->
+  <div *ngIf="isModalOpen" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h4>Додати відгук</h4>
+        <button class="close-btn" (click)="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="review-form">
+          <textarea [(ngModel)]="reviewText" placeholder="Ваш відгук..." rows="4"></textarea>
+          <div class="rating">
+            <label>Оцініть: </label>
+            <select [(ngModel)]="reviewRating">
+              <option *ngFor="let rating of [1, 2, 3, 4, 5]" [value]="rating">{{rating}}</option>
+            </select>
+          </div>
+          <button (click)="submitReview()">Відправити</button>
+        </div>
+      </div>
     </div>
-    <button (click)="submitReview()">Відправити</button>
   </div>
 
   <div *ngIf="reviews.length > 0">
@@ -31,10 +45,12 @@
       </div>
     </div>
   </div>
+
   <div *ngIf="reviews.length === 0">
     <p>Немає відгуків. Будь ласка, залиште перший відгук!</p>
   </div>
 </div>
+
 
 
 
