@@ -5,10 +5,23 @@ import { CoinChartComponent } from './components/coin-chart/coin-chart.component
 import { PlatformHelper } from  '@natec/mef-dev-platform-connector';
 
 
-const routes: Routes = [
-  { path: '', component: CoinListComponent },  
-  { path: 'coin/:id', component: CoinChartComponent },  
-];
+const routes: Routes = PlatformHelper.updatePluginsRoutes([
+  {
+    path: '',
+    children: [
+      {
+        path: '',
+        component: CoinListComponent
+      },
+      {
+        path: 'coin/:id',
+        component: CoinChartComponent
+      }
+    ]
+  }
+]);
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],  

@@ -16,6 +16,7 @@ export class CoinGeckoService {
       params: { vs_currency: 'usd' }
     });
   }
+  
   getCoinChartData(coinId: string, days: number = 1) {
     return this.http.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`, {
       params: {
