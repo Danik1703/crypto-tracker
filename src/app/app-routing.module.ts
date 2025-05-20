@@ -5,7 +5,7 @@ import { CoinChartComponent } from './components/coin-chart/coin-chart.component
 import { PlatformHelper } from  '@natec/mef-dev-platform-connector';
 
 
-const routes: Routes = PlatformHelper.updatePluginsRoutes([
+const routes: Routes = [
   {
     path: '',
     children: [
@@ -19,7 +19,7 @@ const routes: Routes = PlatformHelper.updatePluginsRoutes([
       }
     ]
   }
-]);
+];
 
 
 
